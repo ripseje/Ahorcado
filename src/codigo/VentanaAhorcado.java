@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package codigo;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -12,10 +14,75 @@ import javax.swing.JButton;
  */
 public class VentanaAhorcado extends javax.swing.JFrame {
     
+    //esta variable guarda los fallos que llevo en el juego
+    int numeroFallos = 0;
+    
+    String palabraOculta = "CETYS";
+    
     //este método recibe el botón que ha sido pulsado
     //y procesa la letra en su etiqueta
     private void chequeaBoton(JButton boton){
         boton.setEnabled(false);
+        chequeaLetra(boton.getText());
+    }
+    
+    private void chequeaLetra(String letra){
+        String palabraConGuiones = jLabel1.getText();
+        
+        if(palabraOculta.contains(letra)){
+            //en este caso la letra si que está
+            //y que la o las letras se descubran en la palabra con guiones
+            char letraPulsada = letra.charAt(0);
+            for(int i=0; i<palabraOculta.length(); i++){
+                if(palabraOculta.charAt(i) == letraPulsada){
+                    palabraConGuiones = 
+                            palabraConGuiones.substring(0, 2*i)
+                            + letra
+                            + palabraConGuiones.substring(2*i+1);
+                            
+                }
+            }
+            
+            jLabel1.setText(palabraConGuiones);
+        }
+        else{
+            numeroFallos++;
+            dibujaImagen();
+        }
+        
+        
+    }
+    
+    //cambia la imagen en función de cuántos fallos llevamos
+    private void dibujaImagen(){
+        String nombreImagen = "";
+        switch (numeroFallos){
+            case 0: nombreImagen = "/imagenes/ahorcado_0.png"; 
+                break;
+            case 1: nombreImagen = "/imagenes/ahorcado_1.png"; 
+                break;
+            case 2: nombreImagen = "/imagenes/ahorcado_2.png"; 
+                break;
+            case 3: nombreImagen = "/imagenes/ahorcado_3.png"; 
+                break;
+            case 4: nombreImagen = "/imagenes/ahorcado_4.png"; 
+                break;
+            case 5: nombreImagen = "/imagenes/ahorcado_5.png"; 
+                break;
+            default : nombreImagen = "/imagenes/ahorcado_fin.png";
+        }
+        
+        ImageIcon miImagen =
+                new ImageIcon(
+                        new ImageIcon(getClass().getResource(nombreImagen))
+                        .getImage()
+                        .getScaledInstance(jLabel2.getWidth(), 
+                                           jLabel2.getHeight(), 
+                                           Image.SCALE_DEFAULT)
+        );
+        //cargo la imagen en el jLabel que muestra que fallo llevamos
+        jLabel2.setIcon(miImagen);
+        
     }
     
     /**
@@ -23,6 +90,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
      */
     public VentanaAhorcado() {
         initComponents();
+        dibujaImagen();
     }
 
     
@@ -275,7 +343,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(99, 99, 99)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -345,7 +413,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(letraH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
