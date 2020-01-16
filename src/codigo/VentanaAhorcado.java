@@ -17,6 +17,8 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     //esta variable guarda los fallos que llevo en el juego
     int numeroFallos = 0;
     
+    boolean partida = true;
+    
     String palabraOculta = "CETYS";
     
     //este método recibe el botón que ha sido pulsado
@@ -44,6 +46,10 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             }
             
             jLabel1.setText(palabraConGuiones);
+            if(!(palabraConGuiones.contains("_"))){
+                numeroFallos = -1;
+                dibujaImagen();
+            }
         }
         else{
             numeroFallos++;
@@ -57,6 +63,8 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     private void dibujaImagen(){
         String nombreImagen = "";
         switch (numeroFallos){
+            case -1: nombreImagen = "/imagenes/acertasteTodo.png";
+                break;
             case 0: nombreImagen = "/imagenes/ahorcado_0.png"; 
                 break;
             case 1: nombreImagen = "/imagenes/ahorcado_1.png"; 
