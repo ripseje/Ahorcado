@@ -5,6 +5,7 @@
  */
 package codigo;
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -19,7 +20,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     
     boolean partida = true;
     
-    String palabraOculta = "CETYS";
+    String palabraOculta = eligePalabra();
     
     //este método recibe el botón que ha sido pulsado
     //y procesa la letra en su etiqueta
@@ -99,8 +100,21 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     public VentanaAhorcado() {
         initComponents();
         dibujaImagen();
+        //Inicializo el jLabel en el que se muestran los guiones bajos
+        String auxiliar = "";
+        for(int i=0; i < palabraOculta.length(); i++){
+            auxiliar = auxiliar + "_ ";
+        }
+        jLabel1.setText(auxiliar);
     }
-
+    
+    
+    private String eligePalabra(){
+        String [] listaPalabras = {"HOLA", "VALIKAKA", "BORREGUITO", "BABYYODA"};
+        Random aleatorio = new Random();
+        int posicion = aleatorio.nextInt(listaPalabras.length);
+        return listaPalabras[posicion].toUpperCase();
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
