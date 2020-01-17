@@ -18,15 +18,17 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     //esta variable guarda los fallos que llevo en el juego
     int numeroFallos = 0;
     
-    boolean partida = true;
+    boolean partidaTerminada = false;
     
     String palabraOculta = eligePalabra();
     
     //este método recibe el botón que ha sido pulsado
     //y procesa la letra en su etiqueta
     private void chequeaBoton(JButton boton){
-        boton.setEnabled(false);
-        chequeaLetra(boton.getText());
+        if(!(partidaTerminada)){
+            boton.setEnabled(false);
+            chequeaLetra(boton.getText());
+        }
     }
     
     private void chequeaLetra(String letra){
@@ -50,10 +52,14 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             if(!(palabraConGuiones.contains("_"))){
                 numeroFallos = -1;
                 dibujaImagen();
+                partidaTerminada = true;
             }
         }
         else{
             numeroFallos++;
+            if(numeroFallos >= 6){
+                partidaTerminada = true;
+            }
             dibujaImagen();
         }
         
@@ -110,7 +116,10 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     
     
     private String eligePalabra(){
-        String [] listaPalabras = {"HOLA", "VALIKAKA", "BORREGUITO", "BABYYODA"};
+        String [] listaPalabras = {"HOLA", "VALIKAKA", "BORREGUITO", "BABYYODA",
+            "DELYNITH", "FORESKIN", "ANDERE", "FUNCIONARIO", "CHINO", "GALLOS",
+            "OSU", "TRONCO", "COJONES", "BOOLEAN", "STRING", "PAPI", "CELESTINA",
+            "ARKANOID"};
         Random aleatorio = new Random();
         int posicion = aleatorio.nextInt(listaPalabras.length);
         return listaPalabras[posicion].toUpperCase();
